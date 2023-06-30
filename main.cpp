@@ -3,6 +3,18 @@
 #include<unordered_set>
 using namespace std;
 
+void debugy(unordered_set<int> y[][3]){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<3;j++){
+            for(unordered_set<int>::iterator el=y[i][j].begin();el!=y[i][j].end();++el){
+                    cout<<*el;
+            }
+            cout<<" ";
+        }
+        cout<<endl;
+    }
+}
+
 void clone(unordered_set<int> source[][3],unordered_set<int> dest[][3]){//copying set
     for(int i=0;i<9;i++){
         for(int j=0;j<3;j++){
@@ -64,7 +76,6 @@ int fill_sudoku(){
             }
         }
         clone(y,temp);
-
         for(j=0;j<3;j++){
             for(k=0;k<3;k++){
                 xpos=Rnd(x[j]);
@@ -73,6 +84,7 @@ int fill_sudoku(){
                 //erasing
                 x[j].erase(xpos);
                 y[xpos-1][k].erase(ypos);
+                debugy(y);
                 for(int it=0;it<9;it++){
                     temp[it][k].erase(ypos);
                 }
