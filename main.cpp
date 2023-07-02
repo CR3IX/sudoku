@@ -12,12 +12,8 @@ void display(){
         cout<<endl;
     }
 }
-void disp(vector<int> &d){
-    for(int i=0;i<d.size();i++){
-        cout<<d[i];
-    }
-    cout<<endl;
-}
+
+//Randomly fills diagonal 3x3 values
 void fill_diagonal(int row,int col){
     int num,it,temp;
     vector<int> remaining_random;
@@ -33,7 +29,6 @@ void fill_diagonal(int row,int col){
             temp=remaining_random[it];
             remaining_random[it]=remaining_random[(remaining_random.size()-1)];
             remaining_random.pop_back();
-            disp(remaining_random);
 
 
             sudoku[i][j]=num;
