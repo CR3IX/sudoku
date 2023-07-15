@@ -35,6 +35,39 @@ void fill_diagonal(int row,int col){
         }
     }
 }
+void next(int &row,int &col){
+    if(col!=8){
+        col++;
+    }
+    else{
+        row++;
+        col=0;
+    }
+    if(((row>=0&&row<=2)&&(col>=0&&col<=2))||((row>=3&&row<=5)&&(col>=3&&col<=5))||((row>=6&&row<=8)&&(col>=6&&col<=8))){
+        next(row,col);
+    }
+    return;
+}
+bool isvalid(int i,int row,int col){
+
+}
+bool fill_remaining(int row,int col){
+    int i;
+    if(row==8 && col==8){
+        return false;
+    }
+    for(i=1;i<=9;i++){
+        if(!isvalid(i,row,col)){
+            continue;
+        }
+        sudoku[row][col]=i;
+        next(row,col);
+        if(!fill_remaining(row,col)){
+            return false;
+        }
+    }
+    return true;
+}
 
 void fill_sudoku(){
     fill_diagonal(0,0);
