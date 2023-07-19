@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 vector<vector<int> > sudoku(9,vector<int>(9,0));
@@ -92,20 +93,7 @@ bool isvalid(int i,int row,int col){
     }
     if(count>0){
         return false;
-    }
-    r=row-(row%3);
-    c=col-(col%3);
-    count=0;
-    for(it=r;it<r+3;it++){
-        for(j=c;j<c+3;j++){
-            if(sudoku[it][j]==i){
-                count++;
-            }
         }
-    }
-    if(count>0){
-        return false;
-    }
     else{
         return true;
     }
@@ -139,14 +127,23 @@ void fill_sudoku(){
     fill_remaining(0,3);
 }
 int main(){
-    int i,j,n;
+    srand(time(NULL));
+    int i,j,n,cnt;
     fill_sudoku();
     puzz(6);
     initscr();
     noecho();
+    start_color();
+    init_pair(1,COLOR_RED,COLOR_BLACK);
     for(i=0;i<9;i++){
         for(int j=0;j<9;j++){
+            if(puzzle[i][j]==0){
+                attron(COLOR_PAIR(1));
+                cnt++;
+            }
             mvprintw(i*2,j*3,"%d",puzzle[i][j]);
+            if(puzzle[i][j]==0)
+                attroff(COLOR_PAIR(1));
         }
     }
     move(0,0);
@@ -185,6 +182,16 @@ int main(){
             case '9':
                 n=int(ch-'0');
                 if(sudoku[i][j]==n){
+                    cnt--;
+                    if(cnt==0){
+                        clear();
+                        move(0,0);
+                        printw("             .__                  .___ ._._._._.\n  __________ |  |___  __ ____   __| _/ | | | | |\n /  ___/  _ \\|  |\\  \\/ // __ \\ / __ |  | | | | |\n \\___ (  <_> )  |_\\   /\\  ___// /_/ |   \\|\\|\\|\\|\n/____  >____/|____/\\_/  \\___  >____ |   ________\n     \\/                     \\/     \\/   \\/\\/\\/\\/");
+                        getch();
+                        endwin();
+                        break;
+                    }
+
                     printw("%d",n);
                     mvprintw(27,0,"correct!!   ");
                     move(i*2,j*3);
